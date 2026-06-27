@@ -9,11 +9,16 @@ const app = express();
 app.use(express.json()); 
 app.use(cors()); 
 
+const favoriteRouter = require('./routes/favorite');
+
 app.get("/", (req, res) => {
     res.send("Server Running");
 });
-app.use('/api/auth', require('./routes/auth'));
-
+const authRouter = require('./routes/auth');
+app.use('/api/auth', authRouter);
+app.use('/auth', authRouter);
+app.use('/api/favorites', favoriteRouter);
+app.use('/favorites', favoriteRouter);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
